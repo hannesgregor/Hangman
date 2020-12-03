@@ -1,3 +1,5 @@
+//loome klassi ja konstruktori, mille parameetriteks on arvatav sõna ja olemasolevate pakkumiste arv.
+
 class Hangman {
     constructor(word, remainingGuesses){
         this.word = word.toLowerCase().split('');
@@ -5,14 +7,15 @@ class Hangman {
         this.guessedLetters = [];
         this.status = 'playing';
     }
-
+    //vaatame, kas pakutud täht on meie otsitavas sõnas olemas ja õige arvamise puhul lisame arvatud tähtede listi
     get puzzle() {
         let puzzle = '';
         this.word.forEach((letter) => {
         if (this.guessedLetters.includes(letter) || letter === ' '){
             puzzle += letter;
         } else {
-            puzzle += '*'
+            //kui ei ole, kaotab elu
+            puzzle += '*' 
         }
         })
         return puzzle;
@@ -23,20 +26,21 @@ class Hangman {
         const isUnique = !this.guessedLetters.includes(guess);
         const isBadGuess = !this.word.includes(guess);
         
+    //kontrollime, kas elusid veel on
     if (this.status !== 'playing'){
         return
     }
-    
+        //kontrollime, kas pakutud täht on unikaalne
         if (isUnique){
             this.guessedLetters.push(guess)
         }
-            
+        //kontrolle, kas pakutud täht on unikaalne ja varasemalt pakkumata
         if (isUnique && isBadGuess){
             this.remainingGuesses--
         }
         this.calculateStatus();
     }
-
+    //kontrollime, kas elusid veel on ning anname tagasisidet kasutajale elude ja pakutud tähtede kohta
     get statusMessage(){
         if (this.status === 'playing'){
             return `Elusid: ${this.remainingGuesses}`
@@ -46,7 +50,7 @@ class Hangman {
             return 'Tubli! Arvasid ära!'
         }
     }
-
+    //loeme kasutaja pakkumiste arvu
     calculateStatus(){
         const finished = this.word.every((letter) => this.guessedLetters.includes(letter) || letter === ' ')
         

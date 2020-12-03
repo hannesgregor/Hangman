@@ -1,3 +1,6 @@
+//loome sõnade leidmiseks asünkroonse funktsiooni
+//sõnad leiame kirjasolevalt veebilehelt
+
 const getPuzzle = async (wordCount) => {
     const response = await fetch(`https://puzzle.mead.io/puzzle?wordCount=${wordCount}`)
         if (response.status === 200){
